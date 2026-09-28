@@ -1,0 +1,45 @@
+services:
+  ansible-control:
+    build:
+      context: .
+      dockerfile: docker/ansible-control/Dockerfile
+    container_name: ansible-control
+    hostname: ansible-control
+    stdin_open: true
+    tty: true
+    networks:
+      - ansible-net
+    volumes:
+      - ./ansible:/home/ansible/ansible
+      - ./ssh/ansible_ed25519:/home/ansible/.ssh/ansible_ed25519:ro
+
+  web-node1:
+    build:
+      context: .
+      dockerfile: docker/managed-node/Dockerfile
+    container_name: web-node1
+    hostname: web-node1
+    networks:
+      - ansible-net
+
+  web-node2:
+    build:
+      context: .
+      dockerfile: docker/managed-node/Dockerfile
+    container_name: web-node2
+    hostname: web-node2
+    networks:
+      - ansible-net
+
+  haproxy:
+    build:
+      context: .
+      dockerfile: docker/managed-node/Dockerfile
+    container_name: haproxy
+    hostname: haproxy
+    networks:
+      - ansible-net
+
+networks:
+  ansible-net:
+    driver: bridge

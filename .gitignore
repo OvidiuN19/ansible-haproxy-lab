@@ -1,0 +1,13 @@
+# SSH private keys
+ssh/ansible_ed25519
+ssh/ansible_ed25519.lab
+ssh/*.pem
+
+# Ansible
+*.retry
+
+# Editor / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
